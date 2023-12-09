@@ -1,0 +1,472 @@
+<!doctype html>
+<html>
+   <head>
+      <!-- Built using SRYDEN Lightning UI and TailwindCSS -->
+      <!-- This client area is running Heliactyl <%= settings.version %> -->
+
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="../assets/tailwind.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+      <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1161650288374063176/1176161499656495194/Renoir119.png?ex=656ddcc1&is=655b67c1&hm=3d10e76e634ad75eae5128044c2fcd6b2031b7afd6cca3a1cb1a5d21dff2f598&">
+      <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1161650288374063176/1176161499656495194/Renoir119.png?ex=656ddcc1&is=655b67c1&hm=3d10e76e634ad75eae5128044c2fcd6b2031b7afd6cca3a1cb1a5d21dff2f598&">
+      
+            <!-- Security -->
+      <%- include('./Components/security') %>
+   </head>
+
+<!-- Alert -->
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<style>
+.alertify-notifier .ajs-message.ajs-success {
+    color: #7dd3fc;
+    padding: 12px 8px;
+/* From https://css.glass */
+background: rgba(18, 60, 82, 0.75);
+border-radius: 64px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(6.8px);
+-webkit-backdrop-filter: blur(6.8px);
+border: 1px solid rgba(18, 60, 82, 0.3);
+text-align: center;
+font-weight: semibold;
+}
+</style>
+<!-- End Alert -->
+
+   <body style="font-family: 'Inter'; background: #111415;">
+      <div class="nanobar my-class" id="my-id" style="position: fixed;">
+        <div class="bar"></div>
+      </div>
+      <header style="background: #191c1f;" class="bg-gray-800">
+         <%- include('./Components/navbar') %>
+      </header>
+
+      <!-- Resources, credits -->
+      <%- include('./Components/userinfo') %>
+
+      <!-- Tabs -->
+      <%- include('./Components/navbar-dashboard') %>
+
+               <%
+                  let ram = 0;
+                  let disk = 0;
+                  let cpu = 0;
+                  let servers = pterodactyl.relationships.servers.data.length;
+                  for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+                      ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+                      disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+                      cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+                  }
+                  %>
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <div class="mx-auto max-w-7xl px-2 pt-4 lg:px-8">
+         <div class="lg:flex mt-8 mb-10 lg:items-center lg:justify-between">
+<% if (packages.ram/1024 + extraresources.ram/1024 - ram/1024 < 1) { %>
+<div class="mx-auto w-full">
+  <div>
+    <div class="text-center mt-32">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mx-auto h-14 w-14 mb-4 text-amber-500">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+</svg>
+
+
+      <h2 class="mt-2 text-lg font-medium text-gray-900">Not enough resources</h2>
+      <p class="mt-1 text-xs text-gray-500">You need at least 1 GiB of RAM in order to create a server.</p>
+
+                  <a href="../dashboard" type="button" class="mt-8 inline-flex items-center rounded-full bg-gray-200 px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 transition">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-600">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+</svg>
+                     </svg>
+                     Back
+                  </a>
+    </div>
+  </div>
+</div>
+<% } %>
+            <% if (packages.ram/1024 + extraresources.ram/1024 - ram/1024 > 1) { %>
+            <div class="min-w-0 flex-1">
+               <h2 class="text-2xl font-medium leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Configuration</h2>
+               <p class="text-sm font-light mt-1 text-zinc-400/70 mb-12">Choose your server name and server power you want to use for your server</p>
+               <!-- START INPUTS -->
+               <div>
+                  <dl class="mt-5 pb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 w-full">
+                     <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 shadow rounded-2xl overflow-hidden">
+                        <dt>
+                           <div class="absolute bg-sky-600/30 rounded-full p-3">
+                              <!-- Heroicon name: outline/users -->
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-sky-300">
+                                 <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 00-2.122-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clip-rule="evenodd" />
+                              </svg>
+                           </div>
+                           <p class="ml-16 text-xs font-medium text-white truncate">Name</p>
+                        </dt>
+                        <dd class="ml-16 -pb-4 flex items-baseline">
+                           <input type="text" id="name" class="block bg-[#191c1f] transition w-full rounded-md border-0 text-zinc-300 p-0 placeholder:text-zinc-400 focus:text-white focus:ring-2 focus:ring-inset focus:ring-transparent sm:text-sm sm:leading-6" placeholder="My server">
+                        </dd>
+                     </div>
+                     <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 shadow rounded-2xl overflow-hidden">
+                        <dt>
+                           <div class="absolute bg-sky-600/30 rounded-full p-3">
+                              <!-- Heroicon name: outline/users -->
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-sky-300">
+                                 <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clip-rule="evenodd" />
+                              </svg>
+                           </div>
+                           <p class="ml-16 text-xs font-medium text-white truncate">CPU (vCores)</p>
+                        </dt>
+                        <dd class="ml-16 -pb-4 flex items-baseline">
+                           <input type="text" id="cpu" class="block bg-[#191c1f] transition w-full rounded-md border-0 text-zinc-300 p-0 placeholder:text-zinc-400 focus:text-white focus:ring-2 focus:ring-inset focus:ring-transparent sm:text-sm sm:leading-6" placeholder="<%= packages.cpu/100 + extraresources.cpu/100 - cpu/100 %>">
+                        </dd>
+                     </div>
+                     <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 shadow rounded-2xl overflow-hidden">
+                        <dt>
+                           <div class="absolute bg-sky-600/30 rounded-full p-3">
+                              <!-- Heroicon name: outline/users -->
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-sky-300">
+                                 <path d="M16.5 7.5h-9v9h9v-9z" />
+                                 <path fill-rule="evenodd" d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75zM6 6.75A.75.75 0 016.75 6h10.5a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V6.75z" clip-rule="evenodd" />
+                              </svg>
+                           </div>
+                           <p class="ml-16 text-xs font-medium text-white truncate">RAM (GiB)</p>
+                        </dt>
+                        <dd class="ml-16 -pb-4 flex items-baseline">
+                           <input type="text" id="ram" class="block bg-[#191c1f] transition w-full rounded-md border-0 text-zinc-300 p-0 placeholder:text-zinc-400 focus:text-white focus:ring-2 focus:ring-inset focus:ring-transparent sm:text-sm sm:leading-6" placeholder="<%= packages.ram/1024 + extraresources.ram/1024 - ram/1024 %>">
+                        </dd>
+                     </div>
+                  </dl>
+               </div>
+               <!-- END INPUTS -->
+            </div>
+         </div>
+         <div class="min-w-0 flex-1">
+            <h2 class="text-2xl font-medium leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Server Location</h2>
+            <p class="text-sm font-light mt-1 text-zinc-400/70 mb-12">Select the location nearest to you for the lowest latency</p>
+            <!-- Locations -->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-16">
+               <div onclick="setLocation(1)" class="cursor-pointer relative flex items-center space-x-3 rounded-2xl bg-[#191c1f] px-6 py-5 focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2 hover:border-gray-300 transition">
+                  <div class="flex-shrink-0">
+                     <img class="h-10 w-10 rounded-full bg-[#1f2327] p-2" src="https://www.emojibase.com/resources/img/emojis/apple/x1f1e9-1f1ea.png.pagespeed.ic.LQebQuvdHb.png" alt="">
+                  </div>
+                  <div class="min-w-0 flex-1">
+                     <a class="focus:outline-none">
+                        <span class="absolute inset-0" aria-hidden="true"></span>
+                        <p class="text-sm font-medium text-white">Falkenstein</p>
+                        <p class="truncate text-sm text-zinc-300">Germany (DE)</p>
+                     </a>
+                  </div>
+               </div>
+               <div onclick="setLocation(8)" class="relative flex items-center space-x-3 rounded-2xl bg-[#191c1f] px-6 py-5 transition">
+                  <div class="flex-shrink-0">
+                     <img class="h-10 w-10 rounded-full bg-[#1f2327] p-2" src="https://em-content.zobj.net/source/apple/354/flag-india_1f1ee-1f1f3.png" alt="">
+                  </div>
+                  <div class="min-w-0 flex-1">
+                     <a class="focus:outline-none">
+                        <span class="absolute inset-0" aria-hidden="true"></span>
+                        <p class="text-sm font-medium text-white">Mumbai</p>
+                        <p class="truncate text-sm text-zinc-300">India (IN)</p>
+                     </a>
+                  </div>
+               </div>
+                   <div onclick="setLocation(9)" class="relative flex items-center space-x-3 rounded-2xl bg-[#191c1f] px-6 py-5 transition">
+                  <div class="flex-shrink-0">
+                     <img class="h-10 w-10 rounded-full bg-[#1f2327] p-2" src="https://flagpedia.net/data/flags/emoji/apple/160x160/sg.png" alt="">
+                  </div>
+                  <div class="min-w-0 flex-1">
+                     <a class="focus:outline-none">
+                        <span class="absolute inset-0" aria-hidden="true"></span>
+                        <p class="text-sm font-medium text-white">Singapore</p>
+                        <p class="truncate text-sm text-zinc-300">Singapore (SG)</p>
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="min-w-0 flex-1">
+            <h2 class="text-2xl font-medium leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Server Software</h2>
+            <p class="text-sm font-light mt-1 text-zinc-400/70 mb-12">Select the software that you would like to install.</p>
+            <!-- SOFTWARE -->
+            <div class="relative pb-16">
+               <div class="relative mx-auto max-w-7xl">
+                  <div class="mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3">
+
+                    <!-- Paper -->
+                    <div class="flex flex-col overflow-hidden rounded-2xl" id="paper" onclick="setEgg('paper')">
+                        <div class="flex flex-col overflow-hidden border-none rounded-t-2xl bg-[#191c1f] transition hover:bg-[#1f2327] cursor-pointer transition">
+                           <div class="flex-shrink-0">
+                              <img class="h-40 w-full object-cover rounded-xl bg-[#191c1f]" src="https://cdn.discordapp.com/attachments/1161650288374063176/1176879446402273380/Lantern1_Medium_Banner_US_Landscape3.png?ex=65707965&is=655e0465&hm=584bd6c4b4fa5f6ac11d8663dfa65f9c1354f67126305e61d0679899f270ba11&" alt="">
+                           </div>
+                           <div class="flex flex-1 flex-col justify-between bg-[#191c1f] p-4">
+                              <div class="flex-1">
+                                 <a class="mt-2 block">
+                                    <div class="flex items-center">
+                                       <div class="flex-shrink-0">
+                                 <a>
+                                 <img class="h-10 w-10 rounded-full" src="https://forums.papermc.io/data/assets/logo/logo-nwm-250.png" alt="">
+                                 </a>
+                                 </div>
+                                 <div class="ml-3">
+                                 <p class="text-lg mt-1.5 font-medium text-white">
+                                 <a href="#" class="hover:underline">PaperMC <span class="text-zinc-300">1.20.2</span></a>
+                                 </p>
+                                 </div>
+                                 </div>
+                                 <p class="text-zinc-400 text-sm pt-3">Paper is a fork of Spigot that aims to fix gameplay and mechanics inconsistencies, and to provide a greater degree of control over the server and its players.</p>
+                                 <!-- SERVER INFO -->
+                                 <div class="mt-6">
+                                    <p class="text-zinc-300 text-sm mb-1">Recommended configuration:</p>
+                                    <dl class="divide-y divide-[#1f2327]">
+                                       <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                          <dt class="text-sm font-medium leading-6 text-white">
+                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-sky-300 bg-sky-600/30 rounded-2xl p-1 inline mr-1 mb-0.5">
+                                                <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clip-rule="evenodd" />
+                                             </svg>
+                                             CPU
+                                          </dt>
+                                          <dd class="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">1 vCore</dd>
+                                       </div>
+                                       <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                          <dt class="text-sm font-medium leading-6 text-white">
+                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-sky-300 bg-sky-600/30 rounded-2xl p-1 inline mr-1 mb-0.5">
+                                                <path d="M16.5 7.5h-9v9h9v-9z" />
+                                                <path fill-rule="evenodd" d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75zM6 6.75A.75.75 0 016.75 6h10.5a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V6.75z" clip-rule="evenodd" />
+                                             </svg>
+                                             RAM
+                                          </dt>
+                                          <dd class="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">2 GiB</dd>
+                                       </div>
+                                    </dl>
+                                 </div>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                    <!-- BungeeCord -->
+                    <div class="flex flex-col overflow-hidden rounded-2xl" id="paper" onclick="setEgg('bungeecord')">
+                        <div class="flex flex-col overflow-hidden border-none rounded-t-2xl bg-[#191c1f] transition hover:bg-[#1f2327] cursor-pointer transition">
+                           <div class="flex-shrink-0">
+                              <img class="h-40 w-full object-cover rounded-xl bg-[#191c1f]" src="https://cdn.discordapp.com/attachments/1161650288374063176/1177926627494211624/Heliactyl_G21_YouTube_Thumbnail3.png?ex=657448a8&is=6561d3a8&hm=cfc59350fde26e467be90d8f09304b21f96725771226cda91741e000542ffaee&" alt="">
+                           </div>
+                           <div class="flex flex-1 flex-col justify-between bg-[#191c1f] p-4">
+                              <div class="flex-1">
+                                 <a class="mt-2 block">
+                                    <div class="flex items-center">
+                                       <div class="flex-shrink-0">
+                                 <a>
+                                 <img class="h-10 w-10 rounded-full" src="https://cdn.discordapp.com/attachments/1161650288374063176/1177926859384692877/Untitled_design9.png?ex=657448e0&is=6561d3e0&hm=9ec5d0906be3e1f51a2462a2f1c1bc4ce068986ecbd844ea81e398cc9f371cdd&" alt="">
+                                 </a>
+                                 </div>
+                                 <div class="ml-3">
+                                 <p class="text-lg mt-1.5 font-medium text-white">
+                                 <a href="#" class="hover:underline">BungeeCord <span class="text-zinc-300">1.20.2</span></a>
+                                 </p>
+                                 </div>
+                                 </div>
+                                 <p class="text-zinc-400 text-sm pt-3">Bungeecord is a proxy server for Minecraft that allows you to connect multiple Minecraft servers together and control all of your servers.</p>
+                                 <!-- SERVER INFO -->
+                                 <div class="mt-6">
+                                    <p class="text-zinc-300 text-sm mb-1">Recommended configuration:</p>
+                                    <dl class="divide-y divide-[#1f2327]">
+                                       <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                          <dt class="text-sm font-medium leading-6 text-white">
+                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-sky-300 bg-sky-600/30 rounded-2xl p-1 inline mr-1 mb-0.5">
+                                                <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clip-rule="evenodd" />
+                                             </svg>
+                                             CPU
+                                          </dt>
+                                          <dd class="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">0.5 vCores</dd>
+                                       </div>
+                                       <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                          <dt class="text-sm font-medium leading-6 text-white">
+                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-sky-300 bg-sky-600/30 rounded-2xl p-1 inline mr-1 mb-0.5">
+                                                <path d="M16.5 7.5h-9v9h9v-9z" />
+                                                <path fill-rule="evenodd" d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75zM6 6.75A.75.75 0 016.75 6h10.5a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V6.75z" clip-rule="evenodd" />
+                                             </svg>
+                                             RAM
+                                          </dt>
+                                          <dd class="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">1 GiB</dd>
+                                       </div>
+                                    </dl>
+                                 </div>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                    <!-- Vanilla -->
+                    <div class="flex flex-col overflow-hidden rounded-2xl" id="paper" onclick="setEgg('vanilla')">
+                        <div class="flex flex-col overflow-hidden border-none rounded-t-2xl bg-[#191c1f] transition hover:bg-[#1f2327] cursor-pointer transition">
+                           <div class="flex-shrink-0">
+                              <img class="h-40 w-full object-cover rounded-xl bg-[#191c1f]" src="https://cdn.discordapp.com/attachments/1161650288374063176/1177928577287729202/Heliactyl_G21_YouTube_Thumbnail4.png?ex=65744a79&is=6561d579&hm=7dff5d0e655fa3f732cbd66e766a198937a9347710406e063df23cba95f22388&" alt="">
+                           </div>
+                           <div class="flex flex-1 flex-col justify-between bg-[#191c1f] p-4">
+                              <div class="flex-1">
+                                 <a class="mt-2 block">
+                                    <div class="flex items-center">
+                                       <div class="flex-shrink-0">
+                                 <a>
+                                 <img class="h-10 w-10 rounded-full" src="https://theme.zdassets.com/theme_assets/2155033/bc270c23058d513de5124ffea6bf9199af7a2370.png" alt="">
+                                 </a>
+                                 </div>
+                                 <div class="ml-3">
+                                 <p class="text-lg mt-1.5 font-medium text-white">
+                                 <a href="#" class="hover:underline">Vanilla Bedrock <span class="text-zinc-300">1.20.41</span></a>
+                                 </p>
+                                 </div>
+                                 </div>
+                                 <p class="text-zinc-400 text-sm pt-3">The vanilla version of Minecraft Bedrock. This software type does not allow you to use plugins, mods or anything similar. </p>
+                                 <!-- SERVER INFO -->
+                                 <div class="mt-6">
+                                    <p class="text-zinc-300 text-sm mb-1">Recommended configuration:</p>
+                                    <dl class="divide-y divide-[#1f2327]">
+                                       <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                          <dt class="text-sm font-medium leading-6 text-white">
+                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-sky-300 bg-sky-600/30 rounded-2xl p-1 inline mr-1 mb-0.5">
+                                                <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clip-rule="evenodd" />
+                                             </svg>
+                                             CPU
+                                          </dt>
+                                          <dd class="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">2 vCores</dd>
+                                       </div>
+                                       <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                          <dt class="text-sm font-medium leading-6 text-white">
+                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-sky-300 bg-sky-600/30 rounded-2xl p-1 inline mr-1 mb-0.5">
+                                                <path d="M16.5 7.5h-9v9h9v-9z" />
+                                                <path fill-rule="evenodd" d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75zM6 6.75A.75.75 0 016.75 6h10.5a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V6.75z" clip-rule="evenodd" />
+                                             </svg>
+                                             RAM
+                                          </dt>
+                                          <dd class="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">2 GiB</dd>
+                                       </div>
+                                    </dl>
+                                 </div>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                    <!-- Pocketmine -->
+                    <div class="flex flex-col overflow-hidden rounded-2xl" id="paper" onclick="setEgg('pocketmine')">
+                        <div class="flex flex-col overflow-hidden border-none rounded-t-2xl bg-[#191c1f] transition hover:bg-[#1f2327] cursor-pointer transition">
+                           <div class="flex-shrink-0">
+                              <img class="h-40 w-full object-cover rounded-xl bg-[#191c1f]" src="https://cdn.discordapp.com/attachments/1161650288374063176/1177930653665349652/Heliactyl_G21_YouTube_Thumbnail5.png?ex=65744c68&is=6561d768&hm=9b5028533197f868fb9ee8c8ea31481c71c0d29f41894fd0d17632c025789cfd&" alt="">
+                           </div>
+                           <div class="flex flex-1 flex-col justify-between bg-[#191c1f] p-4">
+                              <div class="flex-1">
+                                 <a class="mt-2 block">
+                                    <div class="flex items-center">
+                                       <div class="flex-shrink-0">
+                                 <a>
+                                 <img class="h-10 w-10 rounded-md" src="https://pbs.twimg.com/profile_images/378800000344863148/9ef95b0c49d34a3aa2fe6669b6101d74_400x400.png" alt="">
+                                 </a>
+                                 </div>
+                                 <div class="ml-3">
+                                 <p class="text-lg mt-1.5 font-medium text-white">
+                                 <a href="#" class="hover:underline">PocketMine <span class="text-zinc-300">1.20.41</span></a>
+                                 </p>
+                                 </div>
+                                 </div>
+                                 <p class="text-zinc-400 text-sm pt-3">PocketMine is a lightweight Minecraft: Bedrock Edition server software that allows you to create and manage your own multiplayer Minecraft world.</p>
+                                 <!-- SERVER INFO -->
+                                 <div class="mt-6">
+                                    <p class="text-zinc-300 text-sm mb-1">Recommended configuration:</p>
+                                    <dl class="divide-y divide-[#1f2327]">
+                                       <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                          <dt class="text-sm font-medium leading-6 text-white">
+                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-sky-300 bg-sky-600/30 rounded-2xl p-1 inline mr-1 mb-0.5">
+                                                <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clip-rule="evenodd" />
+                                             </svg>
+                                             CPU
+                                          </dt>
+                                          <dd class="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">2 vCores</dd>
+                                       </div>
+                                       <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                          <dt class="text-sm font-medium leading-6 text-white">
+                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-sky-300 bg-sky-600/30 rounded-2xl p-1 inline mr-1 mb-0.5">
+                                                <path d="M16.5 7.5h-9v9h9v-9z" />
+                                                <path fill-rule="evenodd" d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75zM6 6.75A.75.75 0 016.75 6h10.5a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V6.75z" clip-rule="evenodd" />
+                                             </svg>
+                                             RAM
+                                          </dt>
+                                          <dd class="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">2 GiB</dd>
+                                       </div>
+                                    </dl>
+                                 </div>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                    
+                  </div>
+               </div>
+            </div>
+            <!-- END SOFTWARE -->
+
+            <!-- SUBMIT -->
+            <div class="mt-5 flex lg:mt-0 mb-16">
+               <span class="hidden sm:block">
+                  <a href="../dashboard" type="button" class="inline-flex items-center rounded-full bg-[#191c1f] px-5 py-2 text-sm font-medium text-white hover:bg-[#191c1f]/80 transition">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5 text-white">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+</svg>
+                     </svg>
+                     Back
+                  </a>
+               </span>
+               <span class="sm:ml-3">
+                  <a onclick="submitForm()" type="button" class="inline-flex items-center cursor-pointer rounded-full bg-sky-600/30 px-5 py-2 text-sm font-medium text-sky-300 hover:bg-sky-600/50 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5">
+                        <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                     </svg>
+                     Create
+                  </a>
+               </span>
+            </div>
+            <% } %>
+         </div>
+         <div></div>
+      </div>
+   </body>
+</html>
+    <script>
+        let inputLocation = "";
+        function setLocation(num) {
+            inputLocation = num;
+            console.log(num);
+            alertify.set('notifier', 'position', 'bottom-center');
+            alertify.success('Location selected!');
+        }
+
+        let inputEgg = "";
+        function setEgg(text) {
+            inputEgg = text;
+            console.log(text);
+            alertify.set('notifier', 'position', 'bottom-center');
+            alertify.success('Software selected!');
+        }
+
+        async function submitForm() {
+            let name = encodeURIComponent(document.getElementById("name").value);
+            let egg = inputEgg;
+            let ram = encodeURIComponent(document.getElementById("ram").value);
+            let disk = 30720;
+            let cpu = encodeURIComponent(document.getElementById("cpu").value);
+            let location = inputLocation;
+
+            alertify.set('notifier', 'position', 'bottom-center');
+            alertify.success('Creating server...');
+
+            setTimeout(() => { document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram*1024}&disk=${disk}&cpu=${cpu*100}&location=${location}`; }, 2500);
+        }
+    </script>

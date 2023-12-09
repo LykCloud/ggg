@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+   <head>
+      <!-- Built using SRYDEN Lightning UI and TailwindCSS -->
+      <!-- This client area is running Heliactyl <%= settings.version %> -->
+
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="../assets/tailwind.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+      <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1161650288374063176/1176161499656495194/Renoir119.png?ex=656ddcc1&is=655b67c1&hm=3d10e76e634ad75eae5128044c2fcd6b2031b7afd6cca3a1cb1a5d21dff2f598&">
+            <!-- Security -->
+      <%- include('./Components/security') %>
+   </head>
+   <body style="font-family: 'Inter'; background: #111415;">
+      <div class="nanobar my-class" id="my-id" style="position: fixed;">
+        <div class="bar"></div>
+      </div>
+      <header style="background: #191c1f;" class="bg-gray-800">
+         <%- include('./Components/navbar') %>
+      </header>
+
+      <!-- Resources, credits -->
+      <%- include('./Components/userinfo') %>
+
+      <!-- Tabs -->
+      <%- include('./Components/navbar-dashboard') %>
+
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <div class="mx-auto max-w-7xl px-2 pt-4 lg:px-8">
+
+            <div class="min-w-0 flex-1 mt-8 mb-10">
+               <h2 class="text-2xl font-medium leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Pulsar Administration</h2>
+               <p class="text-sm font-light mt-1 text-zinc-400/70">You are running Heliactyl build 14200 on core version 14.0.0. Heliactyl is up-to-date!</p>
+            </div>
+<div class="overflow-hidden rounded-2xl bg-[#191c1f] mb-4">
+  <div class="bg-[#191c1f] p-6">
+    <div class="sm:flex sm:items-center sm:justify-between">
+      <div class="sm:flex sm:space-x-5">
+        <div class="flex-shrink-0">
+          <img class="mx-auto h-16 w-16 rounded-2xl" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
+        </div>
+        <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
+          <p class="text-xl font-medium tracking-tight text-white sm:text-2xl"><%= userinfo.username %></p>
+          <p class="text-sm font-medium text-zinc-400"><%= pterodactyl.email %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 w-full">
+  
+<div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+<form action="/setplan">
+    <label class="text-zinc-400 text-sm">Discord ID:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="id" placeholder="Discord ID (E.g. 1160995187460415598)"></p>
+                  <label class="text-zinc-400 text-sm">Package:</label>
+                                <select class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" style="max-width: 95%;" name="package">
+                                    <option value="">Default Plan (Currently: <%= settings.api.client.packages.default %>)</option>
+                                    <% for (let [name, value] of Object.entries(settings.api.client.packages.list)) { %>
+                                        <option value="<%= name %>">
+                                            <%= name %> (RAM: <%= value.ram %>MB, Disk: <%= value.disk %>MB, CPU: <%= value.cpu %>%, Servers: <%= value.servers %>)
+                                        </option>
+                                    <% } %>
+                                </select>
+                            </p>
+                            <button onclick="submitForm()" class="mt-8 mr-1 inline-flex items-center cursor-pointer rounded-full transition bg-sky-600/30 px-5 py-2 text-sm font-medium text-sky-300 hover:bg-sky-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">Change users package</button>
+                            </form>
+</div>
+
+
+  <!-- User's resource allocation -->
+  <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+                            <form action="/addcoins">
+    <label class="text-zinc-400 text-sm">Discord ID:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="id" placeholder="Discord ID (E.g. 1160995187460415598)"></p>
+                  <label class="text-zinc-400 text-sm">Amount of coins:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="coins" placeholder="100"></p>
+                            <button onclick="submitForm()" class="mt-8 mr-1 inline-flex items-center cursor-pointer rounded-full transition bg-sky-600/30 px-5 py-2 text-sm font-medium text-sky-300 hover:bg-sky-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">Give coins to user</button>
+                            </form>
+                            </div>
+
+  <!-- Change user's resources -->
+  <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+<div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+                            <form action="/create_coupon">
+    <label class="text-zinc-400 text-sm">Coupon code:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="code" placeholder="Coupon code here"></p>
+                  <label class="text-zinc-400 text-sm">Amount of coins:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="coins" placeholder="100"></p>
+                            
+                                                         <label class="text-zinc-400 text-sm">Amount of RAM:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="ram" placeholder="1024 for 1GiB of RAM"></p>
+                            
+                                                                                     <label class="text-zinc-400 text-sm">Amount of Storage:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="disk" placeholder="1024 for 1GiB of Storage"></p>
+                            
+                                                                                     <label class="text-zinc-400 text-sm">Amount of CPU:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="cpu" placeholder="100 for 1vCore (Keep in mind - 1vCore = 100)"></p>
+                            
+                                                                                     <label class="text-zinc-400 text-sm">Amount of Server slots:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="servers" placeholder="100"></p>
+                            
+                            
+                            <button onclick="submitForm()" class="mt-8 mr-1 inline-flex items-center cursor-pointer rounded-full transition bg-sky-600/30 px-5 py-2 text-sm font-medium text-sky-300 hover:bg-sky-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">Create coupon</button>
+                            </form>
+                            </div>
+                            </div>
+
+  <!-- Set Coins -->
+  <div class="relative bg-[#191c1f] pt-5 px-3 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+
+  </div>
+
+  <!-- Add Coins -->
+  <div class="relative bg-[#191c1f] pt-5 px-3 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+                            <form action="/revoke_coupon">
+    <label class="text-zinc-400 text-sm">Coupon code:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="code" placeholder="Coupon code here"></p>
+                 
+                            <button onclick="submitForm()" class="mt-8 mr-1 inline-flex items-center cursor-pointer rounded-full transition bg-sky-600/30 px-5 py-2 text-sm font-medium text-sky-300 hover:bg-sky-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">Revoke Coupon</button>
+                            </form>
+  </div>
+
+  <!-- Get user's IP -->
+  <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+                            <form action="/setcoins">
+    <label class="text-zinc-400 text-sm">Discord ID:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="id" placeholder="Discord ID (E.g. 1160995187460415598)"></p>
+                  <label class="text-zinc-400 text-sm">Amount of coins:</label>
+                            <input class="block w-full mt-2 mb-4 mr-2 rounded-full bg-[#23272b] py-1.5 pl-4 transition text-white placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-600 border-none tracking-tight font-medium w-64 sm:text-sm sm:leading-6" name="coins" placeholder="100"></p>
+                            <button onclick="submitForm()" class="mt-8 mr-1 inline-flex items-center cursor-pointer rounded-full transition bg-sky-600/30 px-5 py-2 text-sm font-medium text-sky-300 hover:bg-sky-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">Set their balance</button>
+                            </form>
+  </div>
+
+  <!-- Create/Adjust Coupon -->
+  <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+    <!-- Your code for creating/adjusting coupon goes here -->
+  </div>
+
+  <!-- Revoke Coupon -->
+  <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+    <!-- Your code for revoking coupon goes here -->
+  </div>
+
+  <!-- Remove Account -->
+  <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+    <!-- Your code for removing account goes here -->
+  </div>
+
+  <!-- User Information -->
+  <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 rounded-2xl overflow-hidden">
+    <!-- Your code for user information goes here -->
+  </div>
+</div>
+<%
+let ram = 0;
+let disk = 0;
+let cpu = 0;
+let servers = pterodactyl.relationships.servers.data.length;
+for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+    ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+    disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+    cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+}
+%>
+
+       <div>
+          
+      </div>
+         <div></div>
+      </div>
+</br></br></br>
+   </body>
+</html>
+<style>
+.loadingbar .bar {
+        background: #059669;
+        border-radius: 4px;
+        height: 2px;
+        box-shadow: 0 0 10px #059669;
+}
+</style>
+
+<script>
+async function updateLeaderboard() {
+    fetch("/leaderboard").then(res => Promise.resolve(res.json()).then(leaderboard => {
+        document.getElementById(`rich1`).innerHTML = `${leaderboard[0].username} - ${leaderboard[0].coins} credits`
+        document.getElementById("rich2").innerHTML = `${leaderboard[1].username} - ${leaderboard[1].coins} credits`
+        document.getElementById("rich3").innerHTML = `${leaderboard[2].username} - ${leaderboard[2].coins} credits`
+        document.getElementById("rich4").innerHTML = `${leaderboard[3].username} - ${leaderboard[3].coins} credits`
+        document.getElementById("rich5").innerHTML = `${leaderboard[4].username} - ${leaderboard[4].coins} credits`
+    }))
+}
+updateLeaderboard();
+</script>
+<script>
+async function updateSupply() {
+    fetch("/supply").then(res => Promise.resolve(res.json()).then(supply => {
+        document.getElementById(`supply`).innerHTML = `${supply.totalCoins}`
+    }))
+}
+updateSupply();
+</script>
+<script>
+async function updateAvg() {
+    fetch("/averagecoins").then(res => Promise.resolve(res.json()).then(avg => {
+        document.getElementById(`avg`).innerHTML = `${avg.averageCoins.toFixed(0)}`
+    }))
+}
+updateAvg();
+</script>

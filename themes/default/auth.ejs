@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <!-- Built using SRYDEN Lightning UI and TailwindCSS -->
+   <!-- This client area is running Heliactyl <%= settings.version %> -->
+
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="../assets/tailwind.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+   <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1161650288374063176/1176161499656495194/Renoir119.png?ex=656ddcc1&is=655b67c1&hm=3d10e76e634ad75eae5128044c2fcd6b2031b7afd6cca3a1cb1a5d21dff2f598&">
+   <!-- Security -->
+   <%- include('./Components/security') %>
+</head>
+
+<body style="font-family: 'Inter'; background: #191c1f;" class="flex min-h-screen items-center justify-center">
+   <div class="nanobar my-class" id="my-id" style="position: fixed;">
+      <div class="bar"></div>
+   </div>
+
+   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img class="mx-auto h-20 w-auto" src="https://cdn.discordapp.com/attachments/1161650288374063176/1176161499656495194/Renoir119.png?ex=656ddcc1&is=655b67c1&hm=3d10e76e634ad75eae5128044c2fcd6b2031b7afd6cca3a1cb1a5d21dff2f598&" alt="Your Company">
+      <h2 class="mt-8 text-center text-2xl font-medium leading-9 text-white">Welcome back!</h2>
+      <h4 class="text-zinc-500 text-md tracking-tight text-center">Use the buttons below to sign in.</h4>
+
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+         <form class="space-y-6" action="#" method="POST">
+            <div>
+               <a href="../login" type="submit" class="flex w-full justify-center rounded-full bg-sky-600/30 px-3 py-1.5 text-sm font-semibold leading-6 text-sky-300 shadow-sm hover:bg-sky-600/40 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">Sign in using Discord</a>
+            </div>
+         </form>
+      </div>
+   </div>
+</body>
+
+</html>

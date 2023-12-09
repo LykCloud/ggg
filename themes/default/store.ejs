@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+   <head>
+      <!-- Built using SRYDEN Lightning UI and TailwindCSS -->
+      <!-- This client area is running Heliactyl <%= settings.version %> -->
+
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="../assets/tailwind.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+      <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1161650288374063176/1176161499656495194/Renoir119.png?ex=656ddcc1&is=655b67c1&hm=3d10e76e634ad75eae5128044c2fcd6b2031b7afd6cca3a1cb1a5d21dff2f598&">
+   </head>
+   <body style="font-family: 'Inter'; background: #111415;">
+      <div class="nanobar my-class" id="my-id" style="position: fixed;">
+        <div class="bar"></div>
+      </div>
+      <header style="background: #191c1f;" class="bg-gray-800">
+         <%- include('./Components/navbar') %>
+      </header>
+
+      <!-- Resources, credits -->
+      <%- include('./Components/userinfo') %>
+
+      <!-- Tabs -->
+      <%- include('./Components/navbar-dashboard') %>
+
+      <!-- Security -->
+      <%- include('./Components/security') %>
+      
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+     
+
+
+ <div class="mx-auto max-w-7xl px-2 pt-4 lg:px-8">
+         <div class="lg:flex mt-8 mb-10 lg:items-center lg:justify-between">
+            <div class="min-w-0 flex-1">
+               <h2 class="text-2xl font-medium leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Resources Store</h2>
+               <p class="text-sm font-light mt-1 text-zinc-400/70">Here, you have the option to purchase a wide range of resources, including databases, backups, CPU, RAM, DISK, and slots, all within your reach.</p>
+               <br>
+<% if (req.query.err) { %>
+  <% if (req.query.err !== "none") { %>
+    <dd class="px-2 flex items-center justify-between relative bg-amber-600/10 px-2 py-3 shadow rounded-full overflow-hidden">
+      <div>
+        <p class="text-md font-medium tracking-tight text-amber-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline text-amber-300 mr-2 w-6 h-6">
+            <% if (req.query.err == "CANNOTAFFORD") { %>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            <% } else if (req.query.err == "MAXCPUEXCEETED") { %>
+              <!-- Add path for MAXCPUEXCEETED -->
+            <% } else if (req.query.err == "MAXRAMEXCEETED") { %>
+              <!-- Add path for MAXRAMEXCEETED -->
+            <% } else if (req.query.err == "MAXDISKEXCEETED") { %>
+              <!-- Add path for MAXDISKEXCEETED -->
+            <% } else if (req.query.err == "MAXSERVERSEXCEETED") { %>
+              <!-- Add path for MAXSERVERSEXCEETED -->
+            <% } %>
+          </svg>
+          <% if (req.query.err == "CANNOTAFFORD") { %>
+            Insufficient funds.
+          <% } else if (req.query.err == "MAXCPUEXCEETED") { %>
+            You have reached the CPU limit!
+          <% } else if (req.query.err == "MAXRAMEXCEETED") { %>
+            You have reached the RAM limit!
+          <% } else if (req.query.err == "MAXDISKEXCEETED") { %>
+            You have reached the disk limit!
+          <% } else if (req.query.err == "MAXSERVERSEXCEETED") { %>
+            You have reached the servers limit!
+          <% } %>
+        </p>
+      </div>
+    </dd>
+  <% } else if (req.query.err == "none") { %>
+      <br>
+<dd class="px-2 flex items-center justify-between bg-sky-600/30 px-2 py-3 shadow rounded-full overflow-hidden">
+  <div class="text-md font-medium tracking-tight text-sky-300">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2 inline-block">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+    </svg>
+    Successfully bought extra resources!
+  </div>
+</dd>
+  <% } %>
+<% } %>
+
+            </div>
+         </div>
+         <div>
+<div class="mt-6">
+  <dl class="divide-y divide-transparent grid grid-cols-2 gap-6">
+    <div class="mx-auto w-full bg-[#191c1f] p-12 rounded-2xl">
+  <div class="py-4 px-2 flex items-center justify-between">
+    <div>
+      <p class="text-xl font-medium text-white sm:truncate sm:tracking-tight">Purchase RAM</p>
+      <p class="text-sm font-medium text-zinc-400/50 mb-8">
+        Choose the amount of RAM you want to purchase. Make sure you have enough credits to complete the transaction.
+      </p>
+      <div class="flex">
+        <form action="/buyram" class="w-full">
+          <select name="amount" class="block w-1/2 rounded-full border-none focus:outline-none focus:outline hover:shadow-none items-center rounded-full bg-[#1f2327] px-4 py-2 text-sm font-medium text-zinc-300/90 transition">
+</option>
+                                  <option value=2><%= settings.api.client.coins.store.ram.per/1024 * 2 %>  GiB RAM - <%= settings.api.client.coins.store.ram.cost * 2 %> Credits</option>
+                                  <option value=3><%= settings.api.client.coins.store.ram.per/1024 * 3 %> GiB RAM - <%= settings.api.client.coins.store.ram.cost * 3 %> Credits</option>
+                                  <option value=4><%= settings.api.client.coins.store.ram.per/1024 * 4 %> GiB RAM - <%= settings.api.client.coins.store.ram.cost * 4 %> Credits</option>
+                                  <option value=5><%= settings.api.client.coins.store.ram.per/1024 * 5 %> GiB RAM - <%= settings.api.client.coins.store.ram.cost * 5 %> Credits</option>
+                                  </select>
+          </br>
+          <button onclick="buyRAM()" type="submit" class="inline-flex items-center rounded-full bg-sky-600/30 px-4 py-2 text-sm font-medium text-sky-300 hover:bg-sky-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 transition">
+            Purchase RAM
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="mx-auto w-full bg-[#191c1f] p-12 rounded-2xl">
+  <div class="py-4 px-2 flex items-center justify-between">
+    <div>
+      <p class="text-xl font-medium text-white sm:truncate sm:tracking-tight">Purchase CPU</p>
+      <p class="text-sm font-medium text-zinc-400/50 mb-8">
+        Select the amount of CPU Cores you want to purchase. Make sure you have enough credits to complete the transaction.
+      </p>
+      <div class="flex">
+        <form action="/buycpu" class="w-full">
+          <select name="amount" class="block w-1/2 rounded-full border-none focus:outline-none focus:outline hover:shadow-none items-center rounded-full bg-[#1f2327] px-4 py-2 text-sm font-medium text-zinc-300/90 transition">
+</option>
+                                  <option value=2><%= settings.api.client.coins.store.cpu.per/100 * 2 %> vCores - <%= settings.api.client.coins.store.cpu.cost * 2 %> Credits</option>
+                                  <option value=3><%= settings.api.client.coins.store.cpu.per/100 * 3 %> vCores - <%= settings.api.client.coins.store.cpu.cost * 3 %> Credits</option>
+                                  <option value=4><%= settings.api.client.coins.store.cpu.per/100 * 4 %> vCores - <%= settings.api.client.coins.store.cpu.cost * 4 %> Credits</option>
+                                  <option value=5><%= settings.api.client.coins.store.cpu.per/100 * 5 %> vCores - <%= settings.api.client.coins.store.cpu.cost * 5 %> Credits</option>
+                                  </select>
+          </br>
+          <button onclick="buyCPU()" type="submit" class="inline-flex items-center rounded-full bg-sky-600/30 px-4 py-2 text-sm font-medium text-sky-300 hover:bg-sky-600/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 transition">
+            Purchase CPU
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  </dl>
+</div>
+        <!-- /End replace -->
+      </div>
+         <div></div>
+      </div>
+</br></br></br>
+   </body>
+</html>
+                                            <script>
+                                                async function buyRAM() {
+                                                    let amount = encodeURIComponent(document.getElementById("ram").value);
+                                                    document.location.href = `/buyram?amount=${amount}`;
+                                                };
+            
+                                                async function buyDisk() {
+                                                    let amount = encodeURIComponent(document.getElementById("disk").value);
+                                                    document.location.href = `/buydisk?amount=${amount}`;
+                                                };
+            
+                                                async function buyCPU() {
+                                                    let amount = encodeURIComponent(document.getElementById("cpu").value);
+                                                    document.location.href = `/buycpu?amount=${amount}`;
+                                                };
+                                            </script>
+<script>
+var options = {
+	classname: 'loadingbar',
+    id: 'loadingbar'
+};
+var nanobar = new Nanobar( options );
+nanobar.go( 30 );
+nanobar.go( 76 );
+nanobar.go(100);
+</script>
+<style>
+.loadingbar .bar {
+        background: #000000;
+        border-radius: 4px;
+        height: 2px;
+        box-shadow: 0 0 10px #000000;
+}
+</style>

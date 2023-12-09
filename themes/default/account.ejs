@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+   <head>
+      <!-- Built using SRYDEN Lightning UI and TailwindCSS -->
+      <!-- This client area is running Heliactyl <%= settings.version %> -->
+
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="../assets/tailwind.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+      <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1161650288374063176/1176161499656495194/Renoir119.png?ex=656ddcc1&is=655b67c1&hm=3d10e76e634ad75eae5128044c2fcd6b2031b7afd6cca3a1cb1a5d21dff2f598&">
+            <!-- Security -->
+      <%- include('./Components/security') %>
+   </head>
+   <body style="font-family: 'Inter'; background: #111415;">
+      <div class="nanobar my-class" id="my-id" style="position: fixed;">
+        <div class="bar"></div>
+      </div>
+      <header style="background: #191c1f;" class="bg-gray-800">
+         <%- include('./Components/navbar') %>
+      </header>
+
+      <!-- Resources, credits -->
+      <%- include('./Components/userinfo') %>
+
+      <!-- Tabs -->
+      <%- include('./Components/navbar-dashboard') %>
+
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <div class="mx-auto max-w-7xl px-2 pt-4 lg:px-8">
+
+            <div class="min-w-0 flex-1 mt-8 mb-10">
+               <h2 class="text-2xl font-medium leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Account overview</h2>
+               <p class="text-sm font-light mt-1 text-zinc-400/70">View important details about your Pulsar account.</p>
+            </div>
+<div class="overflow-hidden rounded-2xl bg-[#191c1f] mb-4">
+  <div class="bg-[#191c1f] p-6">
+    <div class="sm:flex sm:items-center sm:justify-between">
+      <div class="sm:flex sm:space-x-5">
+        <div class="flex-shrink-0">
+          <img class="mx-auto h-16 w-16 rounded-2xl" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
+        </div>
+        <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
+          <p class="text-xl font-medium tracking-tight text-white sm:text-2xl"><%= userinfo.username %></p>
+          <p class="text-sm font-medium text-zinc-400"><%= pterodactyl.email %></p>
+        </div>
+      </div>
+      <div class="mt-5 flex justify-center sm:mt-0">
+        <a href="../updateinfo" class="flex items-center justify-center rounded-full bg-sky-600/30 px-4 py-2 text-sm font-medium text-sky-300 shadow-sm hover:bg-sky-600/50 transition">Refresh account data</a>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 divide-y divide-[#23272b] bg-[#1f2327] sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
+    <div class="px-6 py-5 text-center text-sm font-medium">
+      <span class="text-zinc-400">Account created: </span>
+      <span class="text-zinc-300">2023</span>
+    </div>
+
+    <div class="px-6 py-5 text-center text-sm font-medium">
+      <span class="text-zinc-400">Activated locations: </span>
+      <span class="text-zinc-300">4</span>
+    </div>
+
+    <div class="px-6 py-5 text-center text-sm font-medium">
+      <span class="text-zinc-400">Your plan: </span>
+      <span class="text-zinc-300">Free</span>
+    </div>
+  </div>
+</div>
+
+<%
+let ram = 0;
+let disk = 0;
+let cpu = 0;
+let servers = pterodactyl.relationships.servers.data.length;
+for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+    ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+    disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+    cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+}
+%>
+
+       <div>
+          <dl class="mt-5 pb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 w-full">
+             <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 shadow rounded-xl overflow-hidden">
+                <dt>
+                   <div class="absolute bg-sky-600/30 rounded-full p-3">
+                      <!-- Heroicon name: outline/users -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-sky-300">
+  <path d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875z" />
+  <path d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 001.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 001.897 1.384C6.809 12.164 9.315 12.75 12 12.75z" />
+  <path d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 15.914 9.315 16.5 12 16.5z" />
+  <path d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 19.664 9.315 20.25 12 20.25z" />
+</svg>
+
+                   </div>
+                   <p class="ml-16 text-xs font-medium text-gray-400 truncate">Global Disk</p>
+                </dt>
+                <dd class="ml-16 -pb-4 flex items-baseline">
+                   <p class="text-xl font-semibold text-white"><%= disk/1024 %> <span class="text-zinc-400">/ <%= packages.disk/1024 + extraresources.disk/1024 %> GiB</span></p>
+                </dd>
+             </div>
+             <div class="relative bg-[#191c1f] pt-5 px-4 pb-6 sm:pt-6 sm:px-6 shadow rounded-xl overflow-hidden">
+                <dt>
+                   <div class="absolute bg-sky-600/30 rounded-full p-3">
+                      <!-- Heroicon name: outline/users -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-sky-300">
+  <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z" clip-rule="evenodd" />
+  <path fill-rule="evenodd" d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z" clip-rule="evenodd" />
+</svg>
+                   </div>
+                   <p class="ml-16 text-xs font-medium text-gray-400 truncate">Server Limit</p>
+                </dt>
+                <dd class="ml-16 -pb-4 flex items-baseline">
+                   <p class="text-xl font-semibold text-white"><%= servers %> <span class="text-zinc-400">/ 10</span></p>
+                </dd>
+             </div>
+          </dl>
+       </div>
+
+            <div class="min-w-0 flex-1 mt-8 mb-10">
+               <h2 class="text-2xl font-medium leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Skyport Credentials</h2>
+               <p class="text-sm font-light mt-1 text-zinc-400/70">View the credentials to your Pulsar Skyport account.</p>
+            </div>
+
+<div class="bg-[#191c1f] mb-4 px-6 py-4 rounded-2xl">
+<span class="text-white text-sm font-medium">
+This has been moved to the Credentials page.<br>
+<span class="text-zinc-400/80 text-xs font-light">Go there to view your password and Skyport credentials.</span>
+
+        <a href="../credentials" class="flex w-48 mt-4 items-center justify-center rounded-full bg-sky-600/30 px-4 py-2 text-sm font-medium text-sky-300 shadow-sm hover:bg-sky-600/50 transition">Skyport Credentials</a>
+</span>
+</div>
+
+        <!-- /End replace -->
+      </div>
+         <div></div>
+      </div>
+</br></br></br>
+   </body>
+</html>
+<style>
+.loadingbar .bar {
+        background: #059669;
+        border-radius: 4px;
+        height: 2px;
+        box-shadow: 0 0 10px #059669;
+}
+</style>

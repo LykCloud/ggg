@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
+   </head>
+   <body style="font-family: 'Inter'; background: #111415;">
+      <div class="nanobar my-class" id="my-id" style="position: fixed;">
+        <div class="bar"></div>
+      </div>
+      <header style="background: #191c1f;" class="bg-gray-800">
+         <%- include('../Components/navbar') %>
+      </header>
+
+      <!-- Resources, credits -->
+      <%- include('../Components/userinfo') %>
+
+      <!-- Tabs -->
+      <%- include('../Components/navbar-dashboard') %>
+
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <!-- END OF HEADER -->
+      <div class="mx-auto max-w-7xl px-2 pt-4 lg:px-8">
+         <div class="relative">
+            <div class="relative mx-auto max-w-7xl">
+               <div class="mx-auto mt-4 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-4">
+
+</div>
+<div class="mx-auto w-full">
+  <div>
+    <div class="text-center mt-32">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="animate-pulse mx-auto h-14 w-14 mb-4 text-white">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" />
+</svg>
+
+
+      <h2 class="mt-2 text-lg font-medium text-white">Deployment in progess</h2>
+      <p class="mt-1 text-xs text-zinc-400">Your server is being installed on a high-performance DDoS protected machine.</p>
+    </div>
+  </div>
+</div>
+ <meta http-equiv="refresh" content="3.8;url=../dashboard?state=deploymentComplete" />
+
+           
+               </div>
+            </div>
+         </div>
+         <div></div>
+      </div>
+   </body>
+</html>
+<style>
+.loadingbar .bar {
+        background: #059669;
+        border-radius: 4px;
+        height: 2px;
+        box-shadow: 0 0 10px #059669;
+}
+</style>
