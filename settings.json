@@ -94,7 +94,7 @@
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
         "id": "1177781236115177502",
         "secret": "pmC1I35U6Z6kPYyjeYNg4VQ3NrBMHRVF",
-        "link": "https://legendary-bassoon-r4g5vxwpp47qhwpgj-8080.app.github.dev",
+        "link": "https://compix.cyclic.app",
         "callbackpath": "/callback",
         "prompt": true,
         "ip": {
