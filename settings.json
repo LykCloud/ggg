@@ -94,7 +94,7 @@
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
         "id": "1177781236115177502",
         "secret": "pmC1I35U6Z6kPYyjeYNg4VQ3NrBMHRVF",
-        "link": "https://compix.cyclic.app",
+        "link": "https://compix.cloud.zc.al",
         "callbackpath": "/callback",
         "prompt": true,
         "ip": {
