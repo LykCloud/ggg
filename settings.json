@@ -9,9 +9,6 @@
   },
   "website": {
     "port": 8080
-
-
-
     ,
     "secret": "3001-0000"
   },
@@ -93,7 +90,7 @@
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
         "id": "1177781236115177502",
-        "secret": "pmC1I35U6Z6kPYyjeYNg4VQ3NrBMHRVF",
+        "secret": "TfxzQrE3BTnt0elHFiQuGYCqX5N3h5-l",
         "link": "https://compix.cloud.zc.al",
         "callbackpath": "/callback",
         "prompt": true,
